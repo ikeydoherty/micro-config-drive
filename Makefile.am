@@ -67,6 +67,16 @@ AM_CFLAGS += -ggdb3 -O0
 ucd_SOURCES += src/debug.c
 endif
 
+if COVERAGE
+coverage:
+	mkdir -p coverage
+	lcov --compat-libtool --directory . --capture --output-file coverage/report
+	lcov --remove coverage/report 'tests/*' '/usr/*' --output-file coverage/report
+	genhtml -o coverage/ coverage/report
+
+AM_CFLAGS += --coverage
+endif
+
 ucd_CFLAGS = $(AM_CFLAGS) $(GLIB_CFLAGS) $(YAML_CFLAGS) $(JSON_GLIB_CFLAGS) $(PARTED_CFLAGS) $(BLKID_CFLAGS)
 ucd_LDADD = $(GLIB_LIBS) $(YAML_LIBS) $(JSON_GLIB_LIBS) $(PARTED_LIBS) $(BLKID_LIBS)
 

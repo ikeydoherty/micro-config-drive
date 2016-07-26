@@ -31,3 +31,8 @@ test-driver
 			
 # scan-build
 *.plist
+
+# coverage
+*.gcda
+*.gcno
+/coverage/
